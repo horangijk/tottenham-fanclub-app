@@ -3,8 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import manageTottenham from './Reducers/manageTottenham'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+
+const store = createStore(manageTottenham)
+
+ReactDOM.render(
+    <div>
+    <Provider store={store}>
+        <App />
+    </Provider>
+    </div>,
+    document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
