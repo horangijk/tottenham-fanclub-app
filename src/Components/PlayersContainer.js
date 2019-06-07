@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PlayersCard from './PlayersCard'
+import CommentsCard from './CommentsCard';
 // import Reducers from './Reducers/Reducers';
 
 class PlayersContainer extends Component {
     state = {
         players: [],
-        filteredRappers: []
+        filteredRappers: [],
+        comments: []
     }
     
     componentDidMount() {
@@ -16,19 +18,36 @@ class PlayersContainer extends Component {
                 filteredPlayers: allPlayers
             })
             )
+        fetch('http://localhost:3001/api/v1/comments')
+            .then(resp => resp.json())
+            .then(allComments => this.setState({
+                comments: allComments
+            })
+            )
     }
 
     render() {
         let players = this.state.players.map(playerObj => (
-            <PlayersCard
-              player={playerObj}
-            />
+            <div>
+                <PlayersCard
+                    player={playerObj}
+                />
+            </div>
         ));
-           
+        
+        let comments = this.state.comments.map(commentObj => (
+            <div>
+            <CommentsCard
+              comment={commentObj}
+            />
+            </div>
+        )
+          );
+
         return(
             <div>
             {players}
-            
+            {comments}
             </div>
         )
     }

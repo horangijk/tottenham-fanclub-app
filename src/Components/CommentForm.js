@@ -1,19 +1,37 @@
 import React, {Component} from 'react'
 
 class CommentForm extends Component {
+    state = {
+        user: "",
+        description: "",
+        player_id: null
+    }
+
+    handleChange = (e) => {
+        this.setState({description: document.forms["commentForm"]["description"].value})
+    }
 
     handleSubmit = (e) => {
         e.preventDefault()
+        fetch("http://localhost:3001/api/v1/comments", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify()
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+                    
     }
 
     render() {
         return(
-            <div>
+            <form name='commentForm'>
                 <h3>Comment Form</h3>
                 <input 
                     type='text'
                     name='description'
                     placeholder='description'
+                    onChange={this.handleChange}
                 />
                 <br/>
                 <select>
@@ -24,9 +42,9 @@ class CommentForm extends Component {
                 <br/>
                 <input 
                     type='submit'
-                    onSubmit={this.handleSubmit}
+                    onClick={this.handleSubmit}
                 />
-            </div>
+            </form>
         )
     }
 }
