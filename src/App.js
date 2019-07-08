@@ -7,6 +7,7 @@ import Home from './Components/Home';
 import SignupForm from './Components/SignupForm';
 import LoginForm from './Components/LoginForm';
 import CommentForm from './Components/CommentForm';
+import { connect } from 'react-redux';
 
 class App extends Component {
 

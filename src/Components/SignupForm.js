@@ -1,16 +1,33 @@
 import React, { Component } from 'react'
 
 class SignupForm extends Component {
-    
+   
     handleSubmit = e => { 
         e.preventDefault();   
         const email = document.forms['Form']['email'].value;
         const password = document.forms['Form']['password'].value;
-        
-        if (email === "" || password === "") {
-            alert("Email and Password must be filled out");
-            return false;
-        }  
+        const name = document.forms['Form']['user'].value;
+        fetch("http://localhost:3001/api/v1/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                //body: JSON.stringify(this.state)
+                
+                body: JSON.stringify({
+                    "email": email,
+                    "name": name,
+                    "password": password
+                })
+                
+            })
+            .then(result => console.log(result))
+            //.then(res => res.json())
+            //.then(data => console.log(data))
+        // if (email === "" || password === "") {
+        //     alert("Email and Password must be filled out");
+        //     return false;
+        // }  
     }
 
     // render() {

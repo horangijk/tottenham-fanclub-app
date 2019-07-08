@@ -1,32 +1,20 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import { newComments } from '../Reducers/actions.js'
 
 class CommentForm extends Component {
-    state = {
-        user: "",
-        description: "",
-        player_id: null
-    }
 
-    handleChange = (e) => {
-        this.setState({description: document.forms["commentForm"]["description"].value})
-    }
-
+    
     handleSubmit = (e) => {
-        e.preventDefault()
-        fetch("http://localhost:3001/api/v1/comments", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify()
-            })
-            .then(res => res.json())
-            .then(data => console.log(data))
-                    
+        
+        console.log(newComments())
+        e.preventDefault() 
     }
 
     render() {
-        return(
-            <form name='commentForm'>
-                <h3>Comment Form</h3>
+        return (
+            <form className='Form' name='commentForm'>
+                <h1>Comment Form</h1>
                 <input 
                     type='text'
                     name='description'
@@ -34,19 +22,32 @@ class CommentForm extends Component {
                     onChange={this.handleChange}
                 />
                 <br/>
-                <select>
-                    <option value="Son Heung Min">Son Heung Min</option>
-                    <option value="Harry Kane">Harry Kane</option>
-                    <option value="Dele Alli">Dele Alli</option>
+                <select name="dropdown" onChange={this.handleChange}>
+                    <option value={1}>Son Heung Min</option>
+                    <option value={2}>Harry Kane</option>
+                    <option value={3}>Dele Alli</option>
                 </select>
                 <br/>
-                <input 
+                <button type="submit" onClick={this.handleSubmit}>Submit</button>
+                {/* <input 
                     type='submit'
-                    onClick={this.handleSubmit}
-                />
+                    onSubmit={this.handleSubmit}
+                /> */}
             </form>
         )
     }
 }
 
-export default CommentForm;
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        comments: state.comments
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        newComments: (comment) => dispatch(newComments(comment))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);

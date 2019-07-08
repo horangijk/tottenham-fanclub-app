@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 class PlayersCard extends Component {
     state = {
-        clicked: true
+        clicked: true,
+        id: 0
     }
 
     flipClickHandler = () => {
@@ -11,11 +12,13 @@ class PlayersCard extends Component {
         })
     }
     render() {
+        //console.log(this.props.player)
         return (
           <div>
             {this.state.clicked ? (
                 <div>
                     <h3>{this.props.player.name}</h3>
+                    
                     <img className= 'image' alt="" src={this.props.player.img}/>
                 </div>
             ) : (
